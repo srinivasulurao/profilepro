@@ -1,0 +1,23 @@
+Let's go ahead and meeting on GoToMeeting on Tue for our meeting. The details are below. I will call you on Skype first and we can use that for audio.
+
+To prepare, here is the skeleton marketing site that I've been working on: www.marginmarkup.com (password: http://screencast.com/t/GVn6Y6hY). It is just the beginning but will give you a very general idea of what the product is supposed to do, who the customers are and what the general expectation is.
+
+When we are done, I have a file that I will send to you that has all of the slides that I'm going to show you, as well as technical requirements that should be of great help.
+
+================================================================
+Sanjiv,
+
+Below is the link for the PDF of the screens that I showed you. Please note that only pages 1-104 are applicable. 
+
+The password for the Prototype PDF is springfield!2014 and here is a link to download (it’s too large to send): https://www.evernote.com/shard/s52/sh/2932c663-3dbd-4ed9-a4f9-f7897c53c3fc/11244f2e619bb8de0c32ffd1b4c48a31
+
+I’ve also attached additional doc specs for you. 
+
+I can send the Keynote file to you, as well, which will be completely interactive. You will need Keynote on a Mac in order for it to function (it won’t work as a PPT or anything else). Its only for UI testing purposes, and will also allow your guys to slice up the slides for the png images that will be needed.
+
+Thank you,
+
+
+Brett 
+
+Drag and Drop Demo:

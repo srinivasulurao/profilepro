@@ -1,0 +1,433 @@
+
+Have you taken the WordPress 2014 Survey yet?
+WordPress.org
+
+    Showcase
+    Themes
+    Plugins
+    Mobile
+    Support
+    Get Involved
+    About
+    Blog
+    Hosting
+    Download WordPress
+
+Codex
+
+Codex tools: Log in
+Attention Interested in functions, hooks, classes, or methods? Check out the new WordPress Code Reference!
+Plugin API/Hooks 2.0.x
+
+This article is an incomplete list of the Plugin Hooks (Filters and Actions) available in Version 2.0.x of WordPress. For information about how to use hooks, see Plugin API. For information about hooks in the current version of WordPress, see Plugin API/Filter Reference and Plugin API/Action Reference. See the Further Reading section at the bottom of this article for links to some more comprehensive lists.
+
+The information in this article was moved here from the Plugin API article.
+Contents
+
+    1 Action Hooks
+    2 Filter Hooks
+        2.1 Rich Editor Filters
+        2.2 Template Filters
+    3 Further Reading
+
+Action Hooks
+
+admin_footer 
+    No parameter. Executes at the end of the admin panel inside the body tag. Useful for insertion of additional content. 
+
+admin_head 
+    No parameter. Executes in the <head> section of the admin panel. Useful for insertion of additional content. 
+
+admin_menu 
+    No parameter. Executes after the basic admin panel menu structure is in place. Useful for adding additional menus to the admin panel. 
+
+comment_closed 
+    Receives the comment's post ID as a parameter. Executes when attempting to display the comment form for a post that has closed comments. 
+
+comment_form 
+    Receives the comment's post ID as a parameter. Template tag. Executes after displaying the comment form for a post that allows comments. 
+
+comment_id_not_found 
+    Receives the comment's post ID as a parameter. Executes when attempting to display the comment form for a post that does not exist. 
+
+comment_post 
+    Receives the comment ID as a parameter. Executes when a comment is added through wp-comments.php. 
+
+delete_comment 
+    Receives the comment ID as a parameter. Executes when a comment is deleted. 
+
+delete_post 
+    Receives the post ID as a parameter. Executes whenever a post is deleted. 
+
+edit_comment 
+    Receives the comment ID as a parameter. Executes whenever a comment is edited. 
+
+edit_form_advanced 
+    No parameter. Executes during the display of the admin panel's advanced editing page, just before the <div> is closed that contains the post content textarea. Useful for inserting additional input fields into the advanced editing form. 
+
+edit_page_form 
+    No parameter. Executes inside the <form> tag on the page editing form. Useful for inserting additional input fields in the page editing form. 
+
+edit_post 
+    Receives the post ID as a parameter. Executes every time a post is edited. 
+
+generate_rewrite_rules 
+    No parameter. Executes whenever the rewrite rules are recomputed. To modify the computed rules, use the filter rewrite_rules_array instead. 
+
+init 
+    Executes after WordPress has finished loading but before any headers are sent. Useful for intercepting $_GET or $_POST triggers. 
+
+pingback_post 
+    Receives the comment ID as a parameter. Executes when a comment is added via XMLRPC. 
+
+plugins_loaded 
+    Executes after all plugins have been loaded. Useful for use in checking to see if another plugin is installed. 
+
+private_to_published 
+    Receives the post ID as a parameter. Executes when a post is moved from private to published status. 
+
+publish_phone 
+    Receives the post ID as a parameter. Executes when a post is added via wp-mail.php. 
+
+publish_post 
+    Receives the post ID as a parameter. Executes when a post is saved and its status is set to "publish", regardless of its prior setting. NOTE: to add a hook to this action in 1.2, be sure to specify a priority between 0 and 9. The generic_ping hook is buggy and prevents any lesser priority hooks from working. 
+
+save_post 
+    Receives the post ID as a parameter. Executes when a post is saved to the database. 
+
+shutdown 
+    No parameter. Executes when the page output is complete. 
+
+simple_edit_form 
+    No parameter. Executes during the display of the admin panel's simple editing page, just before the <div> is closed that contains the post content textarea. Useful for inserting additional input fields into the simple editing form. 
+
+switch_theme 
+    Receives the name of the current theme as a parameter. Executes when the blog theme is changed. 
+
+template_redirect 
+    No parameter. Executes before the determination of the template file to be used to display the requested page. Useful for providing additional templates based on request criteria. Example (pedagogical, not useful): Redirect all requests to the all.php template file in the current themes' directory. 
+
+function all_on_one () {
+	include(TEMPLATEPATH . '/all.php');
+	exit;
+}
+
+add_action('template_redirect', 'all_on_one');
+
+trackback_post 
+    Receives the comment ID as a parameter. Executes when a comment is added via trackback.php. 
+
+user_register 
+    Receives the user ID as a parameter. Executes when a new user is insert in the base (created by an admin or by user himself) 
+
+wp_footer 
+    No parameter. Template tag. Executes at the end of the <body> tag. Useful for insertion of additional content. 
+
+wp_head 
+    No parameter. Executes in the <head> section. Useful for insertion of additional content. 
+
+wp_meta 
+    No parameter. Executes in the <li>Meta</li> section of the included Theme's sidebar.php's. Useful for insertion of additional content. 
+
+wp_set_comment_status 
+    Receives the comment ID as a parameter. Executes when the comment status changes. 
+
+Filter Hooks
+
+author_email  
+    TBD 
+bloginfo  
+    TBD 
+category_description  
+    applied to the "description" field of comments. 
+comment_author  
+    TBD 
+comment_edit_pre  
+    applied to comment content prior to display in editing screen 
+comment_email  
+    TBD 
+comment_excerpt  
+    TBD 
+comment_save_pre  
+    applied to comment content when re-saving comment from admin pages 
+comments_number  
+    TBD 
+comment_text  
+    passed the comment text, as a string. The following (silly) plugin snippet would make all the comments display in boldface, but would not alter the comment text as stored in the database. 
+
+function bold_comment($comment = '') {
+     return "<strong>$comment</strong>";
+}
+
+add_filter('comment_text', 'bold_comment');
+
+comment_url  
+    passed the commenter's URL, if supplied. The following sample plugin will prepend all URLs with the Google redirector, without modifying the URL as stored in the database: 
+
+function google_redirect($url = '') {
+     if ('' != $url) {
+          return "http://www.google.com/url?sa=D&amp;q=$url";
+     }
+}
+add_filter('comment_url', 'google_redirect');
+
+content_edit_pre  
+    TBD 
+content_save_pre  
+    applied to post content when saving post from admin pages or XML-RPC 
+default_content  
+    Allows a plugin to modify the default value for the content of a new post. 
+default_excerpt  
+    Allows a plugin to modify the default value for the excerpt of a new post. 
+default_title  
+    Allows a plugin to modify the default value for the title of a new post. 
+excerpt_edit_pre  
+    TBD 
+excerpt_save_pre  
+    TBD 
+format_to_edit  
+    Allows a plugin to modify the data stored for a post before it is displayed for editing in the post editor. 
+format_to_post  
+    TBD - Uncalled in current source. 
+get_comment_author_url  
+    use this instead of the comment_url filter 
+get_comment_author_link  
+    returns the HTML for comment author's link with comment author's name 
+link_rating  
+    Allows a plugin to modify the stored value of a link rating before it is used. 
+list_cats  
+    called at two different times: 
+
+    once for each entry in the category list when wp_list_cats() or list_cats() is referenced in a theme. First parameter is the category name. The second optional parameter (for 1.5.1) is the category object.
+    at the end of the category list. First parameter is the entire text of the list. No second parameter is passed.
+
+If the second parameter is desired, be sure to provide a default value. Example that prints the category ID after the name and "end of list" at the bottom:
+
+function foo_bar($content, $category = null) {
+	if ($category == null) {
+		return $content . '<li>(end of list)</li>';
+	}
+	else {
+		return $content . " (ID={$category->cat_ID})";
+	}
+}
+
+add_filter('list_cats', 'foo_bar', 10, 2);
+
+loginout  
+    Allows a plugin to modify the tag and text produced that link to the WordPress login page. 
+mod_rewrite_rules  
+    passed the block of rules as a string. The rules are formatted as they will/should be written out to your .htaccess file. 
+page_link  
+    Allows a plugin to modify auto-generated (i.e. via template tag) links to static pages. 
+phone_content  
+    Allows a plugin to modify the content gathered from a post-by-email post before it is saved. 
+posts_where  
+    Allows a filter to change the WHERE clause of the query that returns the post array. 
+posts_where_paged  
+    Allows a filter to change the WHERE clause of the query that returns the post array, executes after the default paging WHERE clause is generated. 
+posts_join  
+    Allows a plugin to modify the JOIN clauses of the query that returns the post array. This is typically used to add a table to the JOIN, in combination with the posts_where trigger. 
+posts_join_paged 
+    Allows a plugin to modify the JOIN clauses of the query that returns the post array, executes after the default paging JOIN clauses are generated. 
+post_link 
+    Allows a plugin to modify auto-generated (i.e. via template tag) links to posts. 
+posts_orderby 
+    Allows a plugin to modify the ORDER BY clause of the query that returns the post array. 
+preprocess_comment  
+    preprocessing a comment, called with the comment passed as an array. Should return a array. The indices of the array are comment, comment_post_ID, user_ID, user_ip, user_domain, user_agent, author, email, url, approved. 
+pre_comment_approved  
+    Before a comment is stored in the database, this filter provides access to the current approval setting of that comment. Global variables can be used to access the comment data itself. 
+pre_commment_author_name  
+    preprocessing a new comment's author name prior to saving it in the database, called with the author name passed as a string. Should return a string. 
+pre_comment_author_email  
+    preprocessing a new comment's author email prior to saving it in the database, called with the author email passed as a string. Should return a string. 
+pre_comment_author_url  
+    preprocessing a new comment's comment author URL prior to saving it in the database, called with the author URL passed as a string. Should return a string. 
+pre_comment_content  
+    preprocessing a new comment's content prior to saving it in the database, called with the comment content passed as a string. Should return a string. 
+pre_comment_user_agent  
+    TBD 
+pre_comment_user_domain  
+    TBD 
+pre_comment_user_ip  
+    TBD 
+query_string  
+    TBD 
+register  
+    Allows a plugin to modify the tag and text produced that link to the WordPress registration page. 
+rewrite_rules  
+    deprecated in 1.5, see mod_rewrite_rules. 
+rewrite_rules_array  
+    TBD 
+sanitize_title  
+    TBD 
+single_post_title  
+    TBD 
+stylesheet  
+    TBD 
+template  
+    TBD 
+the_category  
+    TBD 
+the_category_rss  
+    TBD 
+the_content  
+    applied to post content prior to rendering. Passed the content as a string. The following plugin snippet would replace all instances of the word foo with bar, without modifying the contents of the post as stored in the database: 
+
+function foo_bar ($content = '') {
+     return preg_replace("/foo/", "bar", $content);
+}
+
+add_filter('the_content', 'foo_bar');
+
+the_date  
+    TBD 
+the_excerpt  
+    TBD 
+the_excerpt_rss  
+    TBD 
+the_posts  
+    TBD 
+the_time  
+    TBD 
+the_title  
+    TBD 
+the_title_rss  
+    TBD 
+the_weekday  
+    TBD 
+the_weekday_date  
+    TBD 
+title_edit_pre  
+    TBD 
+xmlrpc_methods  
+    Applied to list of methods passed to the constructor for the XML-RPC server. This means you can add/remove/override the standard method list. 
+
+Rich Editor Filters
+
+These filters modify the configuration of the rich editor.
+
+mce_browsers
+    The browsers supported by the rich editor. Input and output is an array of strings, which defaults to array('msie', 'gecko', 'opera'). 
+
+mce_theme 
+    The visual and functional theme of the rich editor. Filters using this hook should replace, not append the data they receive, which defaults to 'advanced'. 
+
+mce_plugins 
+    The plugins loaded by the rich editor. Filters using this hook should append the array they receive. The input and output is an array of strings. The data defaults to: 
+
+     array('wordpress', 'autosave', 'wphelp')
+
+    An example function to add your own plugin: 
+
+     add_filter('mce_plugins', 'extended_editor_mce_plugins', 0);
+
+     function extended_editor_mce_plugins($plugins) {
+         array_push($plugins, 'plugin_name');
+         return $plugins;
+     }
+
+mce_valid_elements 
+    The valid html elements for the rich editor. Any elements not in this list will automatically be removed by the rich editor BEFORE the post is submitted to WordPress. The input and output is a single comma-delimited string of elements. See http://tinymce.moxiecode.com/tinymce/docs/option_valid_elements.html for more detailed information. 
+
+    An example function to add your own valid elements (without overriding the defaults): 
+
+     add_filter('mce_valid_elements', 'extended_editor_mce_valid_elements', 0);
+
+     function extended_editor_mce_valid_elements($valid_elements) {
+         $valid_elements .= 'element1,element2';
+         return $valid_elements;
+     }
+
+mce_buttons, mce_buttons_2, mce_buttons_3 
+    The rows of buttons in the toolbar displayed by the rich editor. Filters using these hooks should append to the mce_buttons_2 or mce_buttons_3. The input and output is an array of strings. 
+
+    mce_buttons defaults to array('bold', 'italic', 'strikethrough', 'separator', 'bullist', 'numlist', 'outdent', 'indent', 'separator', 'justifyleft', 'justifycenter', 'justifyright' ,'separator', 'link', 'unlink', 'image', 'wordpress', 'separator', 'undo', 'redo', 'code', 'wphelp') 
+
+    mce_buttons_2 and mce_buttons_3 default to empty arrays (array()). 
+
+    An example function to add your own button after a separator on the right of the first row: 
+
+     add_filter('mce_buttons', 'extended_editor_mce_buttons', 0);
+
+     function extended_editor_mce_buttons($buttons) {
+         array_push($buttons, 'plugin_name');
+         return $buttons;
+     }
+
+Template Filters
+
+You can apply filters to Templates with the following filter hooks. See also the template_redirect action hook above.
+
+404_template 
+archive_template 
+author_template 
+category_template 
+date_template 
+home_template 
+page_template 
+paged_template  
+    (may be eliminated see notes on bug 825) 
+search_template 
+single_template 
+comments_popup_template 
+
+
+Further Reading
+
+    Writing a Plugin - description of how to write a plugin
+    Plugin API - article on how to use filters and actions
+    Skippy's list of actions and filters
+    WordPress Hooks, a work in progress directory of all of WordPress’ hooks.
+    Angsuman's list, a comprehensive listing of WordPress action hooks with documentation and source code location information. It contains all documented and undocumented action hooks in WordPress 2.0.
+
+Categories:
+
+    Plugins
+    Advanced Topics
+    WordPress Development
+
+    Home Page
+    WordPress Lessons
+    Getting Started
+    Working with WordPress
+    Design and Layout
+    Advanced Topics
+    Troubleshooting
+    Developer Docs
+    About WordPress
+
+Codex Resources
+
+    Community portal
+    Current events
+    Recent changes
+    Random page
+    Help
+
+    About
+    Blog
+    Hosting
+    Jobs
+
+    Support
+    Get Involved
+    Learn
+
+    Showcase
+    Plugins
+    Themes
+    Ideas
+
+    WordCamp
+    WordPress.TV
+    BuddyPress
+    bbPress
+
+    WordPress.com
+    Matt
+    Privacy
+    License / GPLv2
+
+Code is Poetry
